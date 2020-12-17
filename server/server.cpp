@@ -37,7 +37,6 @@ struct file_detail { // file detail
     string date;
     string name;
     mutex locker;
-    int writing = 0;
     int reading = 0;
 
     file_detail &operator=(const file_detail &o) { // for fear that mutex can't be assigned
@@ -47,7 +46,6 @@ struct file_detail { // file detail
         bytes = o.bytes;
         date = o.date;
         name = o.name;
-        writing = 0;
         reading = 0;
         return *this;
     }
