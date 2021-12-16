@@ -172,7 +172,7 @@ string transfer_file(int connfd, string file_name, string user) { // for transfe
     file.open(path, ios::in | ios::binary); // open file with read and binary mode
 
     std::string contents((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
-    send(connfd, contents.c_str(), sizeof(contents), 0);
+    send(connfd, contents.c_str(), strlen(contents), 0);
     file.close();
     cout << "transfer" << " " << file_name << " to " << user << endl;
 
@@ -333,15 +333,15 @@ void thread_task(int connfd) { // the task which every thread should execute/
         //determine what user's command is
         if(command[0] == "create") { // create file
             string mes = create_file(command[1], user, command[2]);
-            send(connfd, mes.c_str(), sizeof(mes), 0);
+            send(connfd, mes.c_str(), strlen(mes), 0);
             continue;
         }else if(command[0] == "read") { // transfer file
             string mes =  transfer_file(connfd ,command[1], user);
-            send(connfd, mes.c_str(), sizeof(mes), 0);
+            send(connfd, mes.c_str(), strlen(mes), 0);
             continue;
         }else if(command[0] == "write") { // upload file
             string mes =  upload_file(command[1], user);
-            send(connfd, mes.c_str(), sizeof(mes), 0);
+            send(connfd, mes.c_str(), strlen(mes), 0);
             n = recv(connfd, buff, MAXLINE, 0);
             buff[n] = '\0';
 
@@ -352,10 +352,10 @@ void thread_task(int connfd) { // the task which every thread should execute/
             continue;
         }else if(command[0] == "changemode") { // change file mode
             string mes = changemode(command[1], user, command[2]);
-            send(connfd, mes.c_str(), sizeof(mes), 0);
+            send(connfd, mes.c_str(), strlen(mes), 0);
             continue;
         }else if(command[0] == "exit") { // exit connection
-            send(connfd, "close connection", sizeof("close connection"), 0);
+            send(connfd, "close connection", strlen("close connection"), 0);
             break;
         }else if(command[0] == "show" && command[1] == "-f") { // show file detail
             show_file_list();
@@ -363,7 +363,7 @@ void thread_task(int connfd) { // the task which every thread should execute/
             show_capability_list();
         }
 
-        send(connfd, "ack!!", sizeof("ack!!"), 0);
+        send(connfd, "ack!!", strlen("ack!!"), 0);
     }
 
     cout << "close: " << user <<endl;
