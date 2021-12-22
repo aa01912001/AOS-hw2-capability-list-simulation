@@ -26,16 +26,15 @@ int main()
     }
 
     memset(&servaddr, 0, sizeof(servaddr)); // clean servaddr
-
     servaddr.sin_family = AF_INET; // for IPv4
     servaddr.sin_port = htons(8888); // destination port
-    servaddr.sin_addr.s_addr = inet_addr("10.0.2.15"); // destination ipv4
-
+    servaddr.sin_addr.s_addr = inet_addr("127.0.0.1"); // destination ipv4
 
     if(connect(sockfd,(struct sockaddr *)&servaddr,sizeof(servaddr)) == -1){ // connect to server
+				cout << "teat" << endl;
         cout << "Connection error" << endl;
     }
-
+	
     cout << "Please enter user name: ";
 
     while(1) { // loop for conversation
@@ -84,7 +83,7 @@ int main()
             file.open(command[1], ios::in | ios::binary); // open file with readable and binary mode
 
             std::string contents((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
-            send(sockfd, contents.c_str(), sizeof(contents), 0); // send file content to server
+            send(sockfd, contents.c_str(), contents.length(), 0); // send file content to server
             file.close();
             continue;
         }

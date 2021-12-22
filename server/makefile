@@ -1,4 +1,4 @@
 server.out: server.cpp
-	g++ server.cpp -o server.out -lpthread
+	g++ -std=c++11 server.cpp -o server.out -lpthread
 clean:
 	rm -f *.out
