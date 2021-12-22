@@ -84,7 +84,7 @@ int main()
             file.open(command[1], ios::in | ios::binary); // open file with readable and binary mode
 
             std::string contents((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
-            send(sockfd, contents.c_str(), strlen(contents), 0); // send file content to server
+            send(sockfd, contents.c_str(), sizeof(contents), 0); // send file content to server
             file.close();
             continue;
         }
