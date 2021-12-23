@@ -31,7 +31,6 @@ int main()
     servaddr.sin_addr.s_addr = inet_addr("127.0.0.1"); // destination ipv4
 
     if(connect(sockfd,(struct sockaddr *)&servaddr,sizeof(servaddr)) == -1){ // connect to server
-				cout << "teat" << endl;
         cout << "Connection error" << endl;
     }
 	
